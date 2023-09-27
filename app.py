@@ -84,7 +84,7 @@ def main(start_data, end_data):
     icon_path = os.path.join(".", "raw", "esg_ai_logo.png")
     st.set_page_config(page_title="ESG AI", page_icon=icon_path,
                        layout='centered', initial_sidebar_state="collapsed")
-    _, logo, _ = st.beta_columns(3)
+    #_, logo, _ = st.beta_columns(3)#
     logo.image(icon_path, width=200)
     style = ("text-align:center; padding: 0px; font-family: arial black;, "
              "font-size: 400%")
