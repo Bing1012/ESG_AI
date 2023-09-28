@@ -59,8 +59,8 @@ def get_melted_frame(data_dict, frame_names, keepcol=None, dropcol=None):
 
 
 def filter_on_date(df, start, end, date_col="DATE"):
-    df = df[(df[date_col] >= pd.to_datetime(start)) &
-            (df[date_col] <= pd.to_datetime(end))]
+    df = df[(pd.to_datetime(df[date_col]) >= pd.to_datetime(start)) 
+    & (pd.to_datetime(df[date_col]) <= pd.to_datetime(end))]
     return df
 
 
@@ -153,7 +153,7 @@ def main(start_data, end_data):
 
 
         ###### DISPLAY DATA ######
-        URL_Expander = st.beta_expander(f"View {company.title()} Data:", True)
+        URL_Expander = st.expander(f"View {company.title()} Data:", True)
         URL_Expander.write(f"### {len(df_company):,d} Matching Articles for " +
                            company.title())
         display_cols = ["DATE", "SourceCommonName", "Tone", "Polarity",
@@ -172,7 +172,7 @@ def main(start_data, end_data):
 
         ###### CHART: METRIC OVER TIME ######
         st.markdown("---")
-        col1, col2 = st.beta_columns((1, 3))
+        col1, col2 = st.columns((1, 3))
 
         metric_options = ["Tone", "NegativeTone", "PositiveTone", "Polarity",
                           "ActivityDensity", "WordCount", "Overall Score",
@@ -235,12 +235,15 @@ def main(start_data, end_data):
 
 
         ###### CHART: ESG RADAR ######
-        col1, col2 = st.beta_columns((1, 2))
+        col1, col2 = st.columns((1, 2))
         avg_esg = data["ESG"]
         avg_esg.rename(columns={"Unnamed: 0": "Type"}, inplace=True)
         avg_esg.replace({"T": "Overall", "E": "Environment",
                          "S": "Social", "G": "Governance"}, inplace=True)
-        avg_esg["Industry Average"] = avg_esg.mean(axis=1)
+        print(avg_esg)
+        print(avg_esg['oracle'].dtype)
+        avg_esg.fillna(0, inplace=True)
+        avg_esg["Industry Average"] = avg_esg.iloc[:, 1:].mean(axis=1)
 
         radar_df = avg_esg[["Type", company, "Industry Average"]].melt("Type",
             value_name="score", var_name="entity")
