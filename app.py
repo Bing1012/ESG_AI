@@ -82,7 +82,7 @@ def main(start_data, end_data):
 
     ###### SET UP PAGE ######
     icon_path = os.path.join(".", "raw", "esg_ai_logo.png")
-    st.set_page_config(page_title="ESG AI", page_icon=icon_path,
+    st.set_page_config(page_title="2022“工行杯”全国大学生金融科技创新大赛", page_icon=icon_path,
                        layout='centered', initial_sidebar_state="collapsed")
     #_, logo, _ = st.beta_columns(3)#
     #logo.image(icon_path, width=200)#
